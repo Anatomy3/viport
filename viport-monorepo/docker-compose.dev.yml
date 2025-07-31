@@ -1,0 +1,133 @@
+# =============================================================================
+# VIPORT MONOREPO - DEVELOPMENT DOCKER COMPOSE
+# =============================================================================
+# This docker-compose file is for development environment
+# Only includes databases and external services, not the application
+
+version: '3.8'
+
+services:
+  # =============================================================================
+  # DEVELOPMENT DATABASE
+  # =============================================================================
+  postgres-dev:
+    image: postgres:15-alpine
+    container_name: viport-postgres-dev
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=viport
+      - POSTGRES_PASSWORD=viport123
+      - POSTGRES_DB=viport_dev
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./backend/migrations:/docker-entrypoint-initdb.d/
+    restart: unless-stopped
+    networks:
+      - viport-dev-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U viport -d viport_dev"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # =============================================================================
+  # DEVELOPMENT REDIS
+  # =============================================================================
+  redis-dev:
+    image: redis:7-alpine
+    container_name: viport-redis-dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+    restart: unless-stopped
+    networks:
+      - viport-dev-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # =============================================================================
+  # DEVELOPMENT EMAIL (MAILHOG)
+  # =============================================================================
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: viport-mailhog
+    ports:
+      - "1025:1025"  # SMTP port
+      - "8025:8025"  # Web UI port
+    restart: unless-stopped
+    networks:
+      - viport-dev-network
+
+  # =============================================================================
+  # ADMINER (DATABASE ADMIN)
+  # =============================================================================
+  adminer:
+    image: adminer:latest
+    container_name: viport-adminer
+    ports:
+      - "8080:8080"
+    environment:
+      - ADMINER_DEFAULT_SERVER=postgres-dev
+    depends_on:
+      - postgres-dev
+    restart: unless-stopped
+    networks:
+      - viport-dev-network
+
+  # =============================================================================
+  # REDIS COMMANDER (REDIS ADMIN)
+  # =============================================================================
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: viport-redis-commander
+    ports:
+      - "8081:8081"
+    environment:
+      - REDIS_HOSTS=local:redis-dev:6379
+    depends_on:
+      - redis-dev
+    restart: unless-stopped
+    networks:
+      - viport-dev-network
+
+  # =============================================================================
+  # MINIO (S3 COMPATIBLE STORAGE)
+  # =============================================================================
+  minio:
+    image: minio/minio:latest
+    container_name: viport-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=viport
+      - MINIO_ROOT_PASSWORD=viport123
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    restart: unless-stopped
+    networks:
+      - viport-dev-network
+
+# =============================================================================
+# VOLUMES
+# =============================================================================
+volumes:
+  postgres_dev_data:
+    driver: local
+  redis_dev_data:
+    driver: local
+  minio_data:
+    driver: local
+
+# =============================================================================
+# NETWORKS
+# =============================================================================
+networks:
+  viport-dev-network:
+    driver: bridge

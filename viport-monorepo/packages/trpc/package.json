@@ -1,0 +1,51 @@
+{
+  "name": "@viport/trpc",
+  "version": "1.0.0",
+  "private": true,
+  "description": "tRPC configuration and routers for Viport applications",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist .turbo node_modules"
+  },
+  "dependencies": {
+    "@trpc/client": "catalog:",
+    "@trpc/next": "catalog:",
+    "@trpc/react-query": "catalog:",
+    "@trpc/server": "catalog:",
+    "@viport/types": "workspace:*",
+    "next-auth": "catalog:",
+    "superjson": "^2.2.1",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@viport/config-eslint": "workspace:*",
+    "@viport/config-typescript": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./server": {
+      "types": "./src/server.ts",
+      "default": "./src/server.ts"
+    },
+    "./client": {
+      "types": "./src/client.ts",
+      "default": "./src/client.ts"
+    },
+    "./routers/*": {
+      "types": "./src/routers/*.ts",
+      "default": "./src/routers/*.ts"
+    }
+  }
+}

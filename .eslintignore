@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+dist/
+build/
+.turbo/
+*.config.js
+*.config.ts
+public/
+coverage/
+.nyc_output/
+*.log
+.env*
+.DS_Store
+Thumbs.db

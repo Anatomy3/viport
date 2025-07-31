@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: viport-postgres-dev
+    environment:
+      POSTGRES_DB: viport_dev
+      POSTGRES_USER: viport_user
+      POSTGRES_PASSWORD: viport_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    networks:
+      - viport-dev-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: viport-redis-dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+    networks:
+      - viport-dev-network
+
+volumes:
+  postgres_dev_data:
+  redis_dev_data:
+
+networks:
+  viport-dev-network:
+    driver: bridge

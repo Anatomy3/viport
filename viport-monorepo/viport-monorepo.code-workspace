@@ -1,0 +1,176 @@
+{
+  "folders": [
+    {
+      "name": "🏠 Root",
+      "path": "."
+    },
+    {
+      "name": "🌐 Web App",
+      "path": "./apps/web"
+    },
+    {
+      "name": "🎨 UI Components",
+      "path": "./packages/ui"
+    },
+    {
+      "name": "🔗 tRPC API",
+      "path": "./packages/trpc"
+    },
+    {
+      "name": "📝 Types",
+      "path": "./packages/types"
+    },
+    {
+      "name": "⚙️ ESLint Config",
+      "path": "./packages/config-eslint"
+    },
+    {
+      "name": "🎯 TypeScript Config",
+      "path": "./packages/config-typescript"
+    },
+    {
+      "name": "🎨 Tailwind Config",
+      "path": "./packages/config-tailwind"
+    }
+  ],
+  "settings": {
+    // Workspace specific settings that override .vscode/settings.json
+    "typescript.preferences.includePackageJsonAutoImports": "auto",
+    "typescript.suggest.autoImports": true,
+    "npm.packageManager": "pnpm",
+    
+    // Monorepo specific settings
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/.git": true,
+      "**/.next": true,
+      "**/.turbo": true,
+      "**/dist": true,
+      "**/build": true,
+      "**/coverage": true,
+      "**/storybook-static": true,
+      "**/playwright-report": true,
+      "**/test-results": true,
+      "pnpm-lock.yaml": true
+    },
+    
+    // Multi-root workspace settings
+    "eslint.workingDirectories": [
+      "./apps/web",
+      "./packages/ui", 
+      "./packages/trpc",
+      "./packages/types"
+    ],
+    
+    // Terminal settings for multi-root
+    "terminal.integrated.cwd": "${workspaceFolder}",
+    
+    // File associations
+    "files.associations": {
+      "*.css": "tailwindcss",
+      "*.mdx": "mdx",
+      "turbo.json": "jsonc",
+      "tsconfig*.json": "jsonc"
+    },
+    
+    // Quick open settings
+    "search.quickOpen.includeSymbols": true,
+    "search.quickOpen.includeHistory": true
+  },
+  "extensions": {
+    "recommendations": [
+      // Essential for monorepo development
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "bradlc.vscode-tailwindcss", 
+      "ms-vscode.vscode-typescript-next",
+      
+      // React & Next.js
+      "burkeholland.simple-react-snippets",
+      "dsznajder.es7-react-js-snippets",
+      
+      // Development experience
+      "usernamehw.errorlens",
+      "eamodio.gitlens",
+      "christian-kohler.path-intellisense",
+      "formulahendry.auto-rename-tag",
+      
+      // Code quality
+      "streetsidesoftware.code-spell-checker",
+      "aaron-bond.better-comments",
+      
+      // Theme
+      "zhuangtongfa.material-theme",
+      "pkief.material-icon-theme"
+    ]
+  },
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Install Dependencies",
+        "type": "shell",
+        "command": "pnpm install",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "options": {
+          "cwd": "${workspaceFolder}"
+        }
+      },
+      {
+        "label": "Start Development",
+        "type": "shell", 
+        "command": "pnpm dev",
+        "group": "build",
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "isBackground": true,
+        "options": {
+          "cwd": "${workspaceFolder}"
+        }
+      },
+      {
+        "label": "Build All",
+        "type": "shell",
+        "command": "pnpm build", 
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": false,
+          "panel": "shared"
+        },
+        "options": {
+          "cwd": "${workspaceFolder}"
+        }
+      }
+    ]
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Debug Web App",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/apps/web/node_modules/next/dist/bin/next-dev",
+        "args": ["dev"],
+        "cwd": "${workspaceFolder}/apps/web",
+        "console": "integratedTerminal",
+        "skipFiles": ["<node_internals>/**"]
+      }
+    ]
+  }
+}

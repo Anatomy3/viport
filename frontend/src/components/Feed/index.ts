@@ -1,0 +1,6 @@
+export { Feed } from './Feed'
+export { PostCard } from './PostCard'
+export { CreatePost } from './CreatePost'
+export { EditPost } from './EditPost'
+export { Comments } from './Comments'
+export { FileUpload } from './FileUpload'

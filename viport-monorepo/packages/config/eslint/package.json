@@ -1,0 +1,24 @@
+{
+  "name": "@viport/config-eslint",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ESLint configurations for Viport applications",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@next/eslint-config-next": "catalog:",
+    "@typescript-eslint/eslint-plugin": "catalog:",
+    "@typescript-eslint/parser": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-turbo": "^1.12.4",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-tailwindcss": "^3.14.2"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  }
+}

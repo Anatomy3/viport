@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: viport-postgres
+    environment:
+      POSTGRES_DB: viport
+      POSTGRES_USER: viport_user
+      POSTGRES_PASSWORD: viport_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/migrations:/docker-entrypoint-initdb.d
+    networks:
+      - viport-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: viport-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - viport-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: viport-backend
+    environment:
+      PORT: 8080
+      ENVIRONMENT: production
+      DATABASE_URL: postgres://viport_user:viport_password@postgres:5432/viport?sslmode=disable
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: your-super-secret-jwt-key-change-this-in-production
+      LOG_LEVEL: info
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - viport-network
+    restart: unless-stopped
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: viport-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - viport-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  viport-network:
+    driver: bridge

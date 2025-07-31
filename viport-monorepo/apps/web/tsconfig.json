@@ -1,0 +1,30 @@
+{
+  "extends": "@viport/config-typescript/next.json",
+  "compilerOptions": {
+    "plugins": [{ "name": "next" }],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/lib/*": ["./src/lib/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/providers/*": ["./src/providers/*"],
+      "@/styles/*": ["./src/styles/*"],
+      "@viport/ui": ["../../packages/ui/src"],
+      "@viport/ui/*": ["../../packages/ui/src/*"],
+      "@viport/types": ["../../packages/types/src"],
+      "@viport/types/*": ["../../packages/types/src/*"],
+      "@viport/trpc": ["../../packages/trpc/src"],
+      "@viport/trpc/*": ["../../packages/trpc/src/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

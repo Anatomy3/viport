@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm install)",
+      "Bash(go mod:*)",
+      "Bash(curl:*)",
+      "Bash(sudo tar:*)",
+      "Bash(pkill:*)",
+      "Bash(docker:*)",
+      "Bash(docker-compose:*)",
+      "Bash(chmod:*)",
+      "Bash(./run.sh)",
+      "Bash(wget:*)",
+      "Bash(tar:*)",
+      "Bash(export PATH=$HOME/go-local/go/bin:$PATH)",
+      "Bash(export GOPATH=$HOME/go)",
+      "Bash(export PATH=$PATH:$GOPATH/bin)",
+      "Bash(go:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(touch:*)",
+      "Bash(npm run dev:*)",
+      "Bash(make:*)",
+      "Bash(npm run type-check:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run build:*)"
+    ],
+    "deny": []
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "@viport/config-typescript",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TypeScript configurations for Viport applications",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "catalog:"
+  }
+}

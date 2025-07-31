@@ -1,0 +1,117 @@
+# Dependencies
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist/
+build/
+.next/
+.turbo/
+.nuxt/
+.output/
+.vercel/
+.netlify/
+out/
+
+# Coverage
+coverage/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Generated files
+*.tsbuildinfo
+.eslintcache
+.stylelintcache
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
+test-results/
+playwright-report/
+
+# Storybook
+storybook-static/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Lock files
+*.lock
+
+# Auto-generated
+CHANGELOG.md
+.changeset/
+
+# Binary files
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.ico
+*.svg
+*.woff
+*.woff2
+*.ttf
+*.otf
+*.eot
+*.pdf
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+
+# Ignore specific config files that shouldn't be formatted
+.gitignore
+.dockerignore
+.prettierignore
+.eslintignore
+
+# Public assets (don't format these)
+public/
+static/
+assets/
+
+# Generated migration files
+**/migrations/**/*.sql
+
+# API documentation
+api-docs/
+swagger.json
+openapi.json
+
+# Generated GraphQL files
+**/*.generated.ts
+**/*.generated.tsx
+**/generated/
+
+# Husky
+.husky/_/

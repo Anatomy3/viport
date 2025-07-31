@@ -1,0 +1,208 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build", "^db:generate"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/__tests__/**",
+        "!**/*.test.*",
+        "!**/*.spec.*"
+      ],
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "dist/**",
+        "build/**",
+        ".nuxt/**",
+        ".output/**",
+        ".vercel/**"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env",
+        ".env.local",
+        ".env.development",
+        ".env.development.local"
+      ]
+    },
+    "start": {
+      "dependsOn": ["build"],
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "dependsOn": ["^lint"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".eslintrc.*",
+        ".eslintignore",
+        "eslint.config.*"
+      ],
+      "outputs": [
+        ".eslintcache"
+      ]
+    },
+    "lint:fix": {
+      "dependsOn": ["^lint:fix"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".eslintrc.*",
+        ".eslintignore",
+        "eslint.config.*"
+      ],
+      "outputs": [
+        ".eslintcache"
+      ],
+      "cache": false
+    },
+    "type-check": {
+      "dependsOn": ["^type-check"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "tsconfig.json",
+        "tsconfig.*.json"
+      ],
+      "outputs": [
+        "*.tsbuildinfo",
+        ".tsbuildinfo"
+      ]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "jest.config.*",
+        "vitest.config.*",
+        "playwright.config.*"
+      ],
+      "outputs": [
+        "coverage/**",
+        "test-results/**",
+        "playwright-report/**"
+      ]
+    },
+    "test:watch": {
+      "cache": false,
+      "persistent": true,
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "jest.config.*",
+        "vitest.config.*"
+      ]
+    },
+    "test:coverage": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "jest.config.*",
+        "vitest.config.*"
+      ],
+      "outputs": [
+        "coverage/**"
+      ]
+    },
+    "test:e2e": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "playwright.config.*",
+        "e2e/**"
+      ],
+      "outputs": [
+        "test-results/**",
+        "playwright-report/**"
+      ]
+    },
+    "clean": {
+      "cache": false,
+      "inputs": [],
+      "outputs": []
+    },
+    "db:generate": {
+      "inputs": [
+        "drizzle.config.*",
+        "src/db/schema/**",
+        "migrations/**"
+      ],
+      "outputs": [
+        "src/db/generated/**",
+        "drizzle/**"
+      ]
+    },
+    "db:push": {
+      "cache": false,
+      "inputs": [
+        "drizzle.config.*",
+        "src/db/schema/**"
+      ]
+    },
+    "db:migrate": {
+      "cache": false,
+      "inputs": [
+        "drizzle.config.*",
+        "migrations/**"
+      ]
+    },
+    "db:studio": {
+      "cache": false,
+      "persistent": true,
+      "inputs": [
+        "drizzle.config.*"
+      ]
+    },
+    "analyze": {
+      "dependsOn": ["build"],
+      "outputs": [
+        ".next/analyze/**"
+      ]
+    },
+    "storybook": {
+      "cache": false,
+      "persistent": true,
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".storybook/**",
+        "**/*.stories.*"
+      ]
+    },
+    "build-storybook": {
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".storybook/**",
+        "**/*.stories.*"
+      ],
+      "outputs": [
+        "storybook-static/**"
+      ]
+    }
+  },
+  "globalDependencies": [
+    ".env",
+    ".env.local",
+    ".env.development",
+    ".env.production",
+    "package.json",
+    "pnpm-lock.yaml",
+    "turbo.json",
+    ".eslintrc.*",
+    ".prettierrc.*",
+    "tailwind.config.*",
+    "tsconfig.json"
+  ],
+  "globalEnv": [
+    "NODE_ENV",
+    "VERCEL",
+    "VERCEL_ENV",
+    "NEXT_PUBLIC_VERCEL_URL",
+    "DATABASE_URL",
+    "NEXTAUTH_SECRET",
+    "NEXTAUTH_URL",
+    "GO_BACKEND_URL"
+  ]
+}
