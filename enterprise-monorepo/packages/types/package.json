@@ -1,0 +1,45 @@
+{
+  "name": "@viport/types",
+  "version": "1.0.0",
+  "description": "Shared TypeScript type definitions for Viport",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@viport/config-typescript": "workspace:*",
+    "typescript": "^5.6.3"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./auth": {
+      "types": "./dist/auth.d.ts",
+      "default": "./dist/auth.js"
+    },
+    "./posts": {
+      "types": "./dist/posts.d.ts",
+      "default": "./dist/posts.js"
+    },
+    "./products": {
+      "types": "./dist/products.d.ts",
+      "default": "./dist/products.js"
+    },
+    "./users": {
+      "types": "./dist/users.d.ts",
+      "default": "./dist/users.js"
+    }
+  }
+}

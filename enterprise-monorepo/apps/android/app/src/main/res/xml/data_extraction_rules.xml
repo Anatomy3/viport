@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- This will allow automatic backup of user data to Google cloud -->
+        <include domain="sharedpref" path="."/>
+        <exclude domain="sharedpref" path="device.xml"/>
+    </cloud-backup>
+    <device-transfer>
+        <!-- This will allow transfer of user data when changing devices -->
+        <include domain="sharedpref" path="."/>
+        <exclude domain="sharedpref" path="device.xml"/>
+    </device-transfer>
+</data-extraction-rules>

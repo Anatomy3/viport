@@ -12,6 +12,7 @@ import { Shop } from '@/pages/Shop'
 import { Users } from '@/pages/Users'
 import { Posts } from '@/pages/Posts'
 import { useUserStore } from '@/store/userStore'
+import { ToastProvider } from '@/components/ui/Toast'
 
 // Protected Route component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -53,6 +54,7 @@ function App() {
 
   return (
     <Router>
+      <ToastProvider />
       <Routes>
         {/* Public Routes */}
         <Route path="/login" element={

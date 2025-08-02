@@ -1,0 +1,51 @@
+{
+  "name": "@viport/api-client",
+  "version": "1.0.0",
+  "description": "Universal API client for Viport applications",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@viport/types": "workspace:*",
+    "axios": "^1.7.7",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@viport/config-typescript": "workspace:*",
+    "jest": "^29.7.0",
+    "typescript": "^5.6.3"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./auth": {
+      "types": "./dist/auth.d.ts",
+      "default": "./dist/auth.js"
+    },
+    "./users": {
+      "types": "./dist/users.d.ts",
+      "default": "./dist/users.js"
+    },
+    "./posts": {
+      "types": "./dist/posts.d.ts",
+      "default": "./dist/posts.js"
+    },
+    "./products": {
+      "types": "./dist/products.d.ts",
+      "default": "./dist/products.js"
+    }
+  }
+}

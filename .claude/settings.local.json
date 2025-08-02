@@ -26,7 +26,12 @@
       "Bash(make:*)",
       "Bash(npm run type-check:*)",
       "Bash(npm run lint)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(pnpm install:*)",
+      "Bash(source ~/.bashrc)",
+      "Bash(export PATH=\"$HOME/.local/share/pnpm:$PATH\")",
+      "Bash(rm:*)"
     ],
     "deny": []
   }

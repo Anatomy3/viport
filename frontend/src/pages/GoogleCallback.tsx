@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { CheckCircle, XCircle, Loader2 } from 'lucide-react'
 import { useUserStore } from '@/store/userStore'
-import { authApi } from '@/services/authApi'
+import { showToast } from '@/components/ui/Toast'
 
 export const GoogleCallback = () => {
   const [searchParams] = useSearchParams()
@@ -25,9 +27,15 @@ export const GoogleCallback = () => {
           throw new Error('No authorization code received from Google')
         }
 
-        // Skip state verification for now (simplified implementation)
+        // Validate OAuth state and code for security
+        const { useSecureOAuth } = await import('@/services/secureOAuth')
+        const { validateOAuthCallback } = useSecureOAuth()
+        
+        if (!validateOAuthCallback('google', state || '', code)) {
+          throw new Error('Invalid OAuth state or authorization code')
+        }
 
-        console.log('🔍 Processing Google OAuth callback with code:', code)
+        // Processing Google OAuth callback
 
         // Exchange code for tokens via backend
         const response = await fetch('/api/auth/google/callback', {
@@ -54,23 +62,25 @@ export const GoogleCallback = () => {
 
         // Login user
         login(authResponse.user)
+        showToast.success('Successfully signed in with Google!')
         
         setStatus('success')
         
         // Navigate to beranda after short delay
         setTimeout(() => {
           navigate('/beranda')
-        }, 1000)
+        }, 1500)
 
       } catch (error: any) {
-        console.error('❌ Google callback error:', error)
-        setError(error.message || 'Authentication failed')
+        const errorMessage = error.message || 'Authentication failed'
+        setError(errorMessage)
         setStatus('error')
+        showToast.error(errorMessage)
         
         // Navigate back to login after delay
         setTimeout(() => {
           navigate('/login')
-        }, 3000)
+        }, 4000)
       }
     }
 
@@ -78,37 +88,7 @@ export const GoogleCallback = () => {
   }, [searchParams, navigate, login])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4">
-      <div className="max-w-md w-full text-center">
-        <div className="bg-white rounded-2xl shadow-xl p-8">
-          <div className="w-16 h-16 bg-primary-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <span className="text-white font-bold text-2xl">V</span>
-          </div>
-          
-          {status === 'loading' && (
-            <>
-              <h1 className="text-2xl font-bold text-gray-900 mb-4">Completing Sign-in...</h1>
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto"></div>
-              <p className="text-gray-600 mt-4">Please wait while we complete your Google sign-in</p>
-            </>
-          )}
-          
-          {status === 'success' && (
-            <>
-              <h1 className="text-2xl font-bold text-green-600 mb-4">✅ Success!</h1>
-              <p className="text-gray-600">Sign-in completed successfully. Redirecting to your dashboard...</p>
-            </>
-          )}
-          
-          {status === 'error' && (
-            <>
-              <h1 className="text-2xl font-bold text-red-600 mb-4">❌ Error</h1>
-              <p className="text-red-600 mb-4">{error}</p>
-              <p className="text-gray-600">Redirecting back to login page...</p>
-            </>
-          )}
-        </div>
-      </div>
-    </div>
-  )
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-850 dark:to-gray-800 flex items-center justify-center p-4">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23f1f5f9\" fill-opacity=\"0.3\"%3E%3Ccircle cx=\"7\" cy=\"7\" r=\"1\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] dark:bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23374151\" fill-opacity=\"0.1\"%3E%3Ccircle cx=\"7\" cy=\"7\" r=\"1\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]\" />\n\n      <motion.div\n        initial={{ opacity: 0, scale: 0.95 }}\n        animate={{ opacity: 1, scale: 1 }}\n        transition={{ duration: 0.5 }}\n        className=\"relative max-w-md w-full text-center z-10\"\n      >\n        <div className=\"bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 dark:border-gray-800/20 p-8\">\n          <motion.div\n            initial={{ scale: 0 }}\n            animate={{ scale: 1 }}\n            transition={{ delay: 0.2, type: \"spring\", stiffness: 200 }}\n            className=\"w-20 h-20 bg-gradient-to-br from-primary-600 to-primary-700 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-primary-500/25\"\n          >\n            <span className=\"text-white font-bold text-3xl\">V</span>\n          </motion.div>\n          \n          {status === 'loading' && (\n            <motion.div\n              initial={{ opacity: 0, y: 20 }}\n              animate={{ opacity: 1, y: 0 }}\n              className=\"space-y-4\"\n            >\n              <h1 className=\"text-2xl font-bold text-gray-900 dark:text-gray-100\">\n                Completing Sign-in...\n              </h1>\n              <motion.div\n                animate={{ rotate: 360 }}\n                transition={{ duration: 1, repeat: Infinity, ease: \"linear\" }}\n                className=\"mx-auto\"\n              >\n                <Loader2 size={32} className=\"text-primary-600\" />\n              </motion.div>\n              <p className=\"text-gray-600 dark:text-gray-400\">\n                Please wait while we complete your Google sign-in\n              </p>\n            </motion.div>\n          )}\n          \n          {status === 'success' && (\n            <motion.div\n              initial={{ opacity: 0, scale: 0.8 }}\n              animate={{ opacity: 1, scale: 1 }}\n              transition={{ delay: 0.1, type: \"spring\" }}\n              className=\"space-y-4\"\n            >\n              <motion.div\n                initial={{ scale: 0 }}\n                animate={{ scale: 1 }}\n                transition={{ delay: 0.3, type: \"spring\", stiffness: 200 }}\n              >\n                <CheckCircle size={48} className=\"text-success-500 mx-auto\" />\n              </motion.div>\n              <h1 className=\"text-2xl font-bold text-success-600 dark:text-success-400\">\n                Success!\n              </h1>\n              <p className=\"text-gray-600 dark:text-gray-400\">\n                Sign-in completed successfully. Redirecting to your dashboard...\n              </p>\n            </motion.div>\n          )}\n          \n          {status === 'error' && (\n            <motion.div\n              initial={{ opacity: 0, scale: 0.8 }}\n              animate={{ opacity: 1, scale: 1 }}\n              transition={{ delay: 0.1, type: \"spring\" }}\n              className=\"space-y-4\"\n            >\n              <motion.div\n                initial={{ scale: 0 }}\n                animate={{ scale: 1 }}\n                transition={{ delay: 0.3, type: \"spring\", stiffness: 200 }}\n              >\n                <XCircle size={48} className=\"text-error-500 mx-auto\" />\n              </motion.div>\n              <h1 className=\"text-2xl font-bold text-error-600 dark:text-error-400\">\n                Authentication Error\n              </h1>\n              <p className=\"text-error-600 dark:text-error-400 text-sm font-medium\">\n                {error}\n              </p>\n              <p className=\"text-gray-600 dark:text-gray-400 text-sm\">\n                Redirecting back to login page...\n              </p>\n            </motion.div>\n          )}\n        </div>\n      </motion.div>\n    </div>\n  )
 }
