@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Viport</string>
+    
+    <!-- Authentication -->
+    <string name="login_title">Welcome Back</string>
+    <string name="login_subtitle">Sign in to your Viport account</string>
+    <string name="register_title">Create Account</string>
+    <string name="register_subtitle">Join the Viport community today</string>
+    
+    <!-- Common -->
+    <string name="email">Email Address</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="full_name">Full Name</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign up</string>
+    <string name="create_account">Create Account</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="remember_me">Remember me</string>
+    <string name="terms_and_conditions">I agree to the Terms of Service and Privacy Policy</string>
+    
+    <!-- Navigation -->
+    <string name="home">Home</string>
+    <string name="explore">Explore</string>
+    <string name="create">Create</string>
+    <string name="shop">Shop</string>
+    <string name="profile">Profile</string>
+    
+    <!-- Content Descriptions -->
+    <string name="google_logo">Google logo</string>
+    <string name="show_password">Show password</string>
+    <string name="hide_password">Hide password</string>
+    <string name="search">Search</string>
+    <string name="notifications">Notifications</string>
+    <string name="more_options">More options</string>
+    <string name="like">Like</string>
+    <string name="comment">Comment</string>
+    <string name="share">Share</string>
+    <string name="bookmark">Bookmark</string>
+    
+    <!-- Demo -->
+    <string name="demo_credentials_title">💡 Demo Credentials</string>
+    <string name="demo_credentials_subtitle">Email: demo@example.com • Password: password123</string>
+    
+    <!-- Error Messages -->
+    <string name="error_invalid_email">Please enter a valid email address</string>
+    <string name="error_password_too_short">Password must be at least 8 characters</string>
+    <string name="error_passwords_dont_match">Passwords don\'t match</string>
+    <string name="error_network">Network error. Please check your connection.</string>
+    <string name="error_login_failed">Login failed. Please try again.</string>
+    <string name="error_registration_failed">Registration failed. Please try again.</string>
+</resources>
